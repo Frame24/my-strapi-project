@@ -10,13 +10,11 @@ Icon
 .Trashes
 ._*
 
-
 ############################
 # Linux
 ############################
 
 *~
-
 
 ############################
 # Windows
@@ -30,7 +28,6 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
-
 
 ############################
 # Packages
@@ -60,7 +57,6 @@ $RECYCLE.BIN/
 *.out
 *.pid
 
-
 ############################
 # Logs and databases
 ############################
@@ -70,7 +66,6 @@ $RECYCLE.BIN/
 *.sql
 *.sqlite
 *.sqlite3
-
 
 ############################
 # Misc.
@@ -84,6 +79,7 @@ public/uploads/*
 !public/uploads/.gitkeep
 .tsbuildinfo
 .eslintcache
+*.pem
 
 ############################
 # Node.js
@@ -129,3 +125,43 @@ dist
 build
 .strapi-updater.json
 .strapi-cloud.json
+
+############################
+# Next.js
+############################
+
+.next/
+out/
+
+############################
+# Production
+############################
+
+/build
+
+############################
+# Local env files
+############################
+
+.env*.local
+
+############################
+# Debug
+############################
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+############################
+# Vercel
+############################
+
+.vercel
+
+############################
+# Typescript
+############################
+
+*.tsbuildinfo
+next-env.d.ts

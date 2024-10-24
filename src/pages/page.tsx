@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 "use client"
 import { useState } from 'react';
-import PriceList from './PriceList';
-import StudioSection from './StudioSection';
+import PriceList from '../components/PriceList';
+import StudioSection from '../components/StudioSection';
 import { GetStaticProps } from 'next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -38,6 +38,7 @@ export default function Home({ studioInfos, priceList, reviews, faq, blog, conta
 
     return (
         <div>
+            qweqweeqw
             {/* Header / Навигационное меню */}
             <header className='fixed top-0 left-0 w-full bg-white shadow-md z-50'>
                 <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center'>

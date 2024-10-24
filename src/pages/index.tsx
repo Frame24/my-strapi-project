@@ -1,18 +1,18 @@
 import Head from 'next/head';
 import localFont from 'next/font/local';
-import './';
+import React from 'react';
 
 // Подключаем шрифты
 const geistSans = localFont({
     src: './fonts/GeistVF.woff',
     variable: '--font-geist-sans',
     weight: '100 900'
-})
+});
 const geistMono = localFont({
     src: './fonts/GeistMonoVF.woff',
     variable: '--font-geist-mono',
     weight: '100 900'
-})
+});
 
 // SEO компонент для работы с мета-данными
 function SEO({ title, description, keywords }: { title: string, description: string, keywords: string }) {
@@ -33,7 +33,11 @@ function SEO({ title, description, keywords }: { title: string, description: str
 
 export default function RootLayout({
     children,
-    seoData
+    seoData = {
+        title: 'Default Title',
+        description: 'Default Description',
+        keywords: 'default, keywords'
+    }
 }: Readonly<{
     children: React.ReactNode,
     seoData: {
@@ -43,13 +47,14 @@ export default function RootLayout({
     }
 }>) {
     return (
-        <html lang='cs'>
+        <>
             <SEO title={seoData.title} description={seoData.description} keywords={seoData.keywords} />
-            <body
+            <div
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
-                {children} {/* Контент страниц будет вставлен здесь */}
-            </body>
-        </html>
-    )
+                {/* Контент страниц будет вставлен здесь */}
+                {children}
+            </div>
+        </>
+    );
 }

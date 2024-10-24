@@ -6,7 +6,7 @@
       "ES2020"
     ],
     "target": "ES2019",
-    "jsx": "react-jsx", // Добавляем поддержку JSX
+    "jsx": "preserve", // Добавляем поддержку JSX
     "strict": false,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
@@ -16,7 +16,10 @@
     "noEmitOnError": true,
     "noImplicitThis": true,
     "outDir": "dist",
-    "rootDir": "."
+    "rootDir": ".",
+    "allowJs": true,
+    "noEmit": true,
+    "isolatedModules": true
   },
   "include": [
     // Include root files

@@ -4,6 +4,7 @@
   "private": true,
   "description": "A Strapi application",
   "scripts": {
+    "next:dev": "next dev",
     "build": "strapi build && next build",
     "deploy": "strapi deploy",
     "develop": "strapi develop && next dev",

@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "review_sections",
+  "info": {
+    "singularName": "review-section",
+    "pluralName": "review-sections",
+    "displayName": "ReviewSection"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Review": {
+      "displayName": "Review",
+      "type": "component",
+      "repeatable": true,
+      "component": "review.review"
+    },
+    "Button": {
+      "displayName": "Button",
+      "type": "component",
+      "repeatable": false,
+      "component": "button.button"
+    }
+  }
+}

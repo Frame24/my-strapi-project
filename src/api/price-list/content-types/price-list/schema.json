@@ -4,24 +4,35 @@
   "info": {
     "singularName": "price-list",
     "pluralName": "price-lists",
-    "displayName": "PriceList"
+    "displayName": "PriceList",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "ServiceName": {
-      "type": "string"
+    "Gallery": {
+      "displayName": "Gallery",
+      "type": "component",
+      "repeatable": true,
+      "component": "gallery.gallery"
     },
-    "Price": {
-      "type": "decimal"
+    "PriceList": {
+      "displayName": "PriceList",
+      "type": "component",
+      "repeatable": true,
+      "component": "price-list.price-list"
     },
-    "Description": {
-      "type": "text"
+    "ButtonOnline": {
+      "type": "component",
+      "repeatable": true,
+      "component": "button.button"
     },
-    "Category": {
-      "type": "string"
+    "ButtonWhatsAPP": {
+      "type": "component",
+      "repeatable": true,
+      "component": "button.button"
     }
   }
 }

@@ -4,7 +4,8 @@
   "info": {
     "singularName": "hero-section",
     "pluralName": "hero-sections",
-    "displayName": "Hero Section"
+    "displayName": "Hero Section",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -32,19 +33,30 @@
       "type": "text"
     },
     "background_image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
       ],
-      "type": "media",
-      "multiple": false,
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
       }
+    },
+    "Button": {
+      "type": "component",
+      "repeatable": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "component": "button.button"
     }
   }
 }

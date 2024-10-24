@@ -495,12 +495,125 @@ export interface PluginUsersPermissionsUser
   };
 }
 
+export interface ApiBlogSectionBlogSection extends Struct.CollectionTypeSchema {
+  collectionName: 'blog_sections';
+  info: {
+    singularName: 'blog-section';
+    pluralName: 'blog-sections';
+    displayName: 'BlogSection';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Blog: Schema.Attribute.Component<'blog.blog', true>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::blog-section.blog-section'
+    > &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiBookingSectionBookingSection
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'booking_sections';
+  info: {
+    singularName: 'booking-section';
+    pluralName: 'booking-sections';
+    displayName: 'BookingSection';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Schema.Attribute.String;
+    Subtitle: Schema.Attribute.Text;
+    Button: Schema.Attribute.Component<'button.button', true>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::booking-section.booking-section'
+    > &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiContactContact extends Struct.CollectionTypeSchema {
+  collectionName: 'contacts';
+  info: {
+    singularName: 'contact';
+    pluralName: 'contacts';
+    displayName: 'Contact';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Contact: Schema.Attribute.Component<'contact.contact', true>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::contact.contact'
+    > &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiFaqFaq extends Struct.CollectionTypeSchema {
+  collectionName: 'faqs';
+  info: {
+    singularName: 'faq';
+    pluralName: 'faqs';
+    displayName: 'FAQ';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    QA: Schema.Attribute.Component<'qa.qa', true>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::faq.faq'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiHeroSectionHeroSection extends Struct.CollectionTypeSchema {
   collectionName: 'hero_sections';
   info: {
     singularName: 'hero-section';
     pluralName: 'hero-sections';
     displayName: 'Hero Section';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -531,6 +644,12 @@ export interface ApiHeroSectionHeroSection extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
+    Button: Schema.Attribute.Component<'button.button', true> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -552,15 +671,16 @@ export interface ApiPriceListPriceList extends Struct.CollectionTypeSchema {
     singularName: 'price-list';
     pluralName: 'price-lists';
     displayName: 'PriceList';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    ServiceName: Schema.Attribute.String;
-    Price: Schema.Attribute.Decimal;
-    Description: Schema.Attribute.Text;
-    Category: Schema.Attribute.String;
+    Gallery: Schema.Attribute.Component<'gallery.gallery', true>;
+    PriceList: Schema.Attribute.Component<'price-list.price-list', true>;
+    ButtonOnline: Schema.Attribute.Component<'button.button', true>;
+    ButtonWhatsAPP: Schema.Attribute.Component<'button.button', true>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -572,6 +692,36 @@ export interface ApiPriceListPriceList extends Struct.CollectionTypeSchema {
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::price-list.price-list'
+    > &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiReviewSectionReviewSection
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'review_sections';
+  info: {
+    singularName: 'review-section';
+    pluralName: 'review-sections';
+    displayName: 'ReviewSection';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Review: Schema.Attribute.Component<'review.review', true>;
+    Button: Schema.Attribute.Component<'button.button', false>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::review-section.review-section'
     > &
       Schema.Attribute.Private;
   };
@@ -995,8 +1145,13 @@ declare module '@strapi/strapi' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::blog-section.blog-section': ApiBlogSectionBlogSection;
+      'api::booking-section.booking-section': ApiBookingSectionBookingSection;
+      'api::contact.contact': ApiContactContact;
+      'api::faq.faq': ApiFaqFaq;
       'api::hero-section.hero-section': ApiHeroSectionHeroSection;
       'api::price-list.price-list': ApiPriceListPriceList;
+      'api::review-section.review-section': ApiReviewSectionReviewSection;
       'api::studio-info.studio-info': ApiStudioInfoStudioInfo;
       'admin::permission': AdminPermission;
       'admin::user': AdminUser;

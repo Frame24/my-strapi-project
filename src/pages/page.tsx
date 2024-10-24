@@ -38,7 +38,6 @@ export default function Home({ studioInfos, priceList, reviews, faq, blog, conta
 
     return (
         <div>
-            qweqweeqw
             {/* Header / Навигационное меню */}
             <header className='fixed top-0 left-0 w-full bg-white shadow-md z-50'>
                 <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center'>
@@ -143,40 +142,4 @@ export default function Home({ studioInfos, priceList, reviews, faq, blog, conta
             </section>
         </div>
     );
-}
-
-// Получение данных из Strapi
-export const getStaticProps: GetStaticProps = async () => {
-    const studioRes = await fetch('http://localhost:1337/api/studioinfos');
-    const studioInfos = await studioRes.json();
-
-    const priceRes = await fetch('http://localhost:1337/api/pricelists');
-    const priceList = await priceRes.json();
-
-    // Запрос для отзывов
-    const reviewsRes = await fetch('http://localhost:1337/api/reviews');
-    const reviews = await reviewsRes.json();
-
-    // Запрос для FAQ
-    const faqRes = await fetch('http://localhost:1337/api/faqs');
-    const faq = await faqRes.json();
-
-    // Запрос для блогов
-    const blogRes = await fetch('http://localhost:1337/api/blogs');
-    const blog = await blogRes.json();
-
-    // Запрос для контактов
-    const contactRes = await fetch('http://localhost:1337/api/contacts');
-    const contact = await contactRes.json();
-
-    return {
-        props: {
-            studioInfos,
-            priceList,
-            reviews,
-            faq,
-            blog,
-            contact,
-        },
-    };
 }

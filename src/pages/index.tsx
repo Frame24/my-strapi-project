@@ -1,60 +1,64 @@
-import Head from 'next/head';
-import localFont from 'next/font/local';
-import React from 'react';
+// pages/index.tsx
 
-// Подключаем шрифты
-const geistSans = localFont({
-    src: './fonts/GeistVF.woff',
-    variable: '--font-geist-sans',
-    weight: '100 900'
-});
-const geistMono = localFont({
-    src: './fonts/GeistMonoVF.woff',
-    variable: '--font-geist-mono',
-    weight: '100 900'
-});
+import { GetStaticProps } from 'next';
+import RootLayout from '../components/RootLayout'; // Импортируем RootLayout
+import Page from './page'; // Импортируем компонент Page
 
-// SEO компонент для работы с мета-данными
-function SEO({ title, description, keywords }: { title: string, description: string, keywords: string }) {
+export default function IndexPage({
+    studioInfos,
+    priceList,
+    reviews,
+    faq,
+    blog,
+    contact
+}) {
+    const seoData = {
+        title: 'Popnailscz - Маникюр и Педикюр в Праге',
+        description: 'Popnailscz предлагает лучшие услуги маникюра и педикюра в Праге. Забронируйте ваш сеанс уже сегодня!',
+        keywords: 'маникюр, педикюр, Прага, Popnailscz, студия красоты'
+    };
+
     return (
-        <Head>
-            <title>{title}</title>
-            <meta name="description" content={description} />
-            <meta name="keywords" content={keywords} />
-            <meta name="robots" content="index, follow" />
-            <meta property="og:title" content={title} />
-            <meta property="og:description" content={description} />
-            <meta property="og:image" content="https://popnailscz.example.com/og-image.jpg" />
-            <meta property="og:url" content="https://popnailscz.cz" />
-            <meta name="twitter:card" content="summary_large_image" />
-        </Head>
+        <RootLayout seoData={seoData}>
+            <Page
+                studioInfos={studioInfos}
+                priceList={priceList}
+                reviews={reviews}
+                faq={faq}
+                blog={blog}
+                contact={contact}
+            />
+        </RootLayout>
     );
 }
 
-export default function RootLayout({
-    children,
-    seoData = {
-        title: 'Default Title',
-        description: 'Default Description',
-        keywords: 'default, keywords'
-    }
-}: Readonly<{
-    children: React.ReactNode,
-    seoData: {
-        title: string,
-        description: string,
-        keywords: string
-    }
-}>) {
-    return (
-        <>
-            <SEO title={seoData.title} description={seoData.description} keywords={seoData.keywords} />
-            <div
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-            >
-                {/* Контент страниц будет вставлен здесь */}
-                {children}
-            </div>
-        </>
-    );
-}
+export const getStaticProps: GetStaticProps = async () => {
+    const studioRes = await fetch('http://localhost:1337/api/studioinfos');
+    const studioInfos = await studioRes.json();
+
+    const priceRes = await fetch('http://localhost:1337/api/pricelists');
+    const priceList = await priceRes.json();
+
+    const reviewsRes = await fetch('http://localhost:1337/api/reviews');
+    const reviews = await reviewsRes.json();
+
+    const faqRes = await fetch('http://localhost:1337/api/faqs');
+    const faq = await faqRes.json();
+
+    const blogRes = await fetch('http://localhost:1337/api/blogs');
+    const blog = await blogRes.json();
+
+    const contactRes = await fetch('http://localhost:1337/api/contacts');
+    const contact = await contactRes.json();
+
+    return {
+        props: {
+            studioInfos,
+            priceList,
+            reviews,
+            faq,
+            blog,
+            contact,
+        },
+    };
+};

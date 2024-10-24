@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "booking_sections",
+  "info": {
+    "singularName": "booking-section",
+    "pluralName": "booking-sections",
+    "displayName": "BookingSection"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Subtitle": {
+      "type": "text"
+    },
+    "Button": {
+      "type": "component",
+      "repeatable": true,
+      "component": "button.button"
+    }
+  }
+}

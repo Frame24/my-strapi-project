@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-"use client"
+/* eslint-disable @next/next/no-img-element */
+"use client";
 import { useState } from 'react';
 import PriceList from '../components/PriceList';
 import StudioSection from '../components/StudioSection';
@@ -15,26 +16,40 @@ import {
     faBars
 } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/router';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { EffectFade, Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/effect-fade';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
-export default function Home({ studioInfos, priceList, reviews, faq, blog, contact }: {
+export default function Home({
+    heroSection,
+    studioInfos,
+    priceList,
+    reviewSection,
+    faq,
+    blog,
+    contact,
+    bookingSection,
+    socials
+}: {
+    heroSection: any,
     studioInfos: any,
     priceList: any,
-    reviews: any,
+    reviewSection: any,
     faq: any,
     blog: any,
-    contact: any
+    contact: any,
+    bookingSection: any,
+    socials: any
 }) {
     const [isMenuOpen, setMenuOpen] = useState(false);
-
     const router = useRouter();
 
     const changeLanguage = (locale: string) => {
-        const router = useRouter();
-        const currentPath = router.asPath;
-        const pathWithoutLocale = currentPath.replace(/^\/(cz|en|ru)/, '');
-        router.push(`/${locale}${pathWithoutLocale}`);
-      };
-
+        router.push(router.pathname, router.asPath, { locale });
+    };
 
     return (
         <div>
@@ -78,68 +93,363 @@ export default function Home({ studioInfos, priceList, reviews, faq, blog, conta
 
                             {/* Social Media Icons */}
                             <li className='flex space-x-6 mt-4 sm:mt-0'>
-                                <a href='https://wa.me/message/4KCKSARUH5V4G1' className='text-gray-600 hover:text-green-500' target='_blank' rel='noopener noreferrer'>
-                                    <FontAwesomeIcon icon={faWhatsapp} className='w-6 h-6' />
-                                </a>
-                                <a href='https://www.instagram.com/popnails.cz' className='text-gray-600 hover:text-purple-500' target='_blank' rel='noopener noreferrer'>
-                                    <FontAwesomeIcon icon={faInstagram} className='w-6 h-6' />
-                                </a>
-                                <a href='https://www.facebook.com/profile.php?id=61557978369758' className='text-gray-600 hover:text-pink-500' target='_blank' rel='noopener noreferrer'>
-                                    <FontAwesomeIcon icon={faFacebookF} className='w-6 h-6' />
-                                </a>
+                                {socials?.data.map((social, index) => (
+                                    <a
+                                        key={index}
+                                        href={social?.Url}
+                                        className={`text-gray-600 hover:${social?.SocialName === 'WhatsApp' ? 'text-green-500' :
+                                            social?.SocialName === 'Instagram' ? 'text-purple-500' :
+                                                'text-blue-500'
+                                            }`}
+                                        target='_blank'
+                                        rel='noopener noreferrer'
+                                    >
+                                        {social?.SocialName === 'WhatsApp' && <FontAwesomeIcon icon={faWhatsapp} className='w-6 h-6' />}
+                                        {social?.SocialName === 'Facebook' && <FontAwesomeIcon icon={faFacebookF} className='w-6 h-6' />}
+                                        {social?.SocialName === 'Instagram' && <FontAwesomeIcon icon={faInstagram} className='w-6 h-6' />}
+                                    </a>
+                                ))}
                             </li>
-                            <button onClick={() => changeLanguage('cz')}>CZ</button>
-                            <button onClick={() => changeLanguage('en')}>EN</button>
-                            <button onClick={() => changeLanguage('ru')}>RU</button>
+                            {/* Language Switch Buttons */}
+                            <li className='flex space-x-4 mt-4 sm:mt-0'>
+                                <button onClick={() => changeLanguage('cs-CZ')} className={`text-gray-700 ${router.locale === 'cs-CZ' ? 'font-bold' : ''} hover:text-pink-500`}>CZ</button>
+                                <button onClick={() => changeLanguage('en')} className={`text-gray-700 ${router.locale === 'en' ? 'font-bold' : ''} hover:text-pink-500`}>EN</button>
+                                <button onClick={() => changeLanguage('ru')} className={`text-gray-700 ${router.locale === 'ru' ? 'font-bold' : ''} hover:text-pink-500`}>RU</button>
+                            </li>
                         </ul>
                     </nav>
                 </div>
             </header>
 
+
             {/* Hero секция */}
-            <section className='flex flex-col items-center justify-center min-h-screen bg-cover bg-center relative text-white' style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/background_manicure.jpg')` }}>
+            <section
+                className='flex flex-col items-center justify-center min-h-screen bg-cover bg-center relative text-white'
+                style={{
+                    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('http://localhost:1337${heroSection.data[0]?.background_image?.url}')`
+                    ,
+                    backgroundColor: '#f0f0f0' // Отображается при ошибке загрузки фона
+                }}
+            >
                 <div className='relative z-10 text-center px-2 sm:px-4'>
                     <h1 className='text-4xl sm:text-6xl font-bold mb-4 text-shadow'>
-                        Popnailscz — Manikúra a Pedikúra v Praze
+                        {heroSection?.Title || "Popnailscz — Manikúra a Pedikúra v Praze"}
                     </h1>
                     <p className='mt-4 text-lg sm:text-xl mb-8 text-shadow'>
-                        Vaše spokojenost, naše mise
+                        {heroSection?.Description || "Vaše spokojenost, naše mise"}
                     </p>
-                    <a href='https://n995838.alteg.io' className='mt-8 px-10 py-3 sm:px-20 sm:py-4 bg-pink-500 text-white text-lg sm:text-xl font-semibold rounded-lg shadow-lg hover:bg-pink-700'>
-                        Objednat se online
+                    <a
+                        href={heroSection?.Button?.ButtonLink || "https://n995838.alteg.io"}
+                        className='mt-8 px-10 py-3 sm:px-20 sm:py-4 bg-pink-500 text-white text-lg sm:text-xl font-semibold rounded-lg shadow-lg hover:bg-pink-700'
+                    >
+                        {heroSection?.Button?.ButtonText || "Objednat se online"}
+                    </a>
+
+                </div>
+            </section>
+
+
+
+            {/* О нас секция */}
+            <section id='about' className='py-12 bg-gradient-to-r from-pink-100 via-pink-200 to-pink-100'>
+                <h2 className='text-5xl font-extrabold text-center text-pink-700 mb-8 font-serif tracking-wide'>
+                    {studioInfos?.data?.[0]?.Title || "Naše Studio"}
+                </h2>
+                <div className='container mx-auto flex flex-col lg:flex-row justify-between items-start gap-12 lg:gap-24'>
+                    {/* Текстовая часть с карточками */}
+                    <div className='w-full lg:w-1/2 grid grid-cols-1 gap-8'>
+                        {studioInfos?.data?.[0]?.StudioComponents?.map((component, index) => (
+                            <div key={index} className='bg-white p-6 rounded-xl shadow-lg flex items-start transition hover:shadow-2xl transform hover:scale-105'>
+                                {component?.Icon && (
+                                    <img
+                                        src={component?.Icon?.url || component?.Icon?.formats?.thumbnail?.url}
+                                        alt={component?.Title}
+                                        className='w-12 h-12 mr-4'
+                                    />
+                                )}
+                                <div className='flex-grow'>
+                                    <h4 className='text-2xl font-bold text-gray-800 mb-2'>
+                                        {component?.Title}
+                                    </h4>
+                                    <p className='text-lg text-gray-700'>
+                                        {component?.Description}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Слайдер с изображениями студии */}
+                    <div className='w-full lg:w-1/2'>
+                        {studioInfos?.data?.[0]?.Images?.length > 0 ? (
+                            <div className='relative w-full max-w-lg mx-auto'>
+                                <Swiper
+                                    effect='fade'
+                                    navigation
+                                    pagination={{ clickable: true }}
+                                    modules={[EffectFade, Navigation, Pagination]}
+                                    className='w-full h-[500px] flex items-center justify-center overflow-hidden'
+                                >
+                                    {studioInfos.data[0].Images.map((image, index) => (
+                                        <SwiperSlide key={index}>
+                                            <img
+                                                src={image.url}
+                                                alt={`Studio ${index}`}
+                                                className='w-full h-full object-cover rounded-lg shadow-xl'
+                                                loading='lazy'
+                                                style={{ userSelect: 'none' }}
+                                                onMouseDown={e => e.preventDefault()}
+                                            />
+                                        </SwiperSlide>
+                                    ))}
+                                </Swiper>
+                            </div>
+                        ) : (
+                            <p>Nejsou dostupné žádné obrázky studia.</p>
+                        )}
+                    </div>
+                </div>
+            </section>
+
+
+            {/* Временная белая полоса */}
+            <section className='py-6 sm:py-12 bg-gray-100 text-center'></section>
+
+            {/* Секция с ценами */}
+            <section id='services' className='py-12 bg-gradient-to-r from-pink-100 via-pink-200 to-pink-100'>
+                <h2 className='text-5xl font-extrabold text-center text-pink-700 mb-8 font-serif tracking-wide'>
+                    {"Ceník našich služeb"}
+                </h2>
+                {/* Hlavní kontejner s flex pro zarovnání do řady */}
+                <div className='container mx-auto flex flex-col lg:flex-row justify-between items-center gap-10 lg:gap-24'>
+                    {/* Galerie prací */}
+                    <div className='w-full lg:w-1/3 flex flex-col items-center'>
+                        <h3 className='text-3xl font-bold text-center mb-4 text-pink-800'>
+                            {"Galerie prací"}
+                        </h3>
+                        {priceList?.data[0]?.Gallery?.length > 0 ? (
+                            <div className='relative w-full max-w-lg'>
+                                <Swiper
+                                    effect='fade'
+                                    navigation
+                                    pagination={{ clickable: true }}
+                                    modules={[EffectFade, Navigation, Pagination]}
+                                    className='w-full h-80 flex items-center justify-center overflow-hidden'
+                                >
+                                    {priceList.data[0].Gallery.map((image, index) => (
+                                        <SwiperSlide key={index}>
+                                            <img
+                                                src={image.url}
+                                                alt={image.alternativeText || `Práce ${index}`}
+                                                className='w-full h-80 object-cover rounded-lg shadow-xl'
+                                                loading='lazy'
+                                                style={{ userSelect: 'none' }}
+                                                onMouseDown={e => e.preventDefault()}
+                                            />
+                                        </SwiperSlide>
+                                    ))}
+                                </Swiper>
+
+                                {/* Кнопки для записи */}
+                                <div className='flex flex-col items-center mt-4 space-y-2'>
+                                    <a
+                                        href={priceList?.data[0]?.ButtonOnline[0]?.ButtonLink || "https://n995838.alteg.io"}
+                                        className='px-8 py-3 bg-pink-100 text-pink-700 font-semibold rounded-full border-2 border-pink-700 hover:bg-pink-700 hover:text-white transition'
+                                    >
+                                        {priceList?.data[0]?.ButtonOnline[0]?.ButtonText || "Objednat se online"}
+                                    </a>
+                                    <a
+                                        href={priceList?.data[0]?.ButtonWhatsAPP[0]?.ButtonLink || "https://wa.me/message/4KCKSARUH5V4G1"}
+                                        className='px-8 py-3 bg-pink-700 text-white font-semibold rounded-full shadow-lg hover:bg-pink-800 hover:scale-105 transition'
+                                    >
+                                        {priceList?.data[0]?.ButtonWhatsAPP[0]?.ButtonText || "Objednat se WhatsApp"}
+                                    </a>
+                                </div>
+                            </div>
+                        ) : (
+                            <p>Nejsou dostupné žádné obrázky.</p>
+                        )}
+                    </div>
+
+                    {/* Таблица услуг и цен */}
+                    <div className='w-full lg:w-2/3 bg-white p-10 rounded-xl shadow-xl'>
+                        <table className='w-full table-auto font-serif text-lg'>
+                            <thead>
+                                <tr>
+                                    <th className='text-left text-pink-700 pb-4'>SLUŽBA</th>
+                                    <th className='text-left text-pink-700 pb-4'>TRVÁNÍ</th>
+                                    <th className='text-left text-pink-700 pb-4'>CENA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {priceList?.data[0]?.PriceList?.map((service, index) => (
+                                    <tr key={index} className='bg-pink-50 hover:bg-pink-100'>
+                                        <td className='p-4 border-b text-gray-700'>
+                                            {service?.name}
+                                        </td>
+                                        <td className='p-4 border-b text-gray-700'>
+                                            {service?.duration}
+                                        </td>
+                                        <td className='p-4 border-b text-gray-700'>
+                                            {service?.price}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+
+            {/* Секция с отзывами */}
+            <section id='reviews' className='py-6 sm:py-12 bg-gray-100 text-center'>
+                <h2 className='text-4xl font-extrabold text-gray-800 mb-6'>
+                    {"Recenze"}
+                </h2>
+                <div className='flex flex-col items-center justify-center'>
+                    <div className='swiper-container max-w-lg md:max-w-4xl mx-auto'>
+                        <div className='swiper-wrapper flex flex-wrap space-y-2'>
+                            {reviewSection?.data[0]?.Review?.map((review, index) => (
+                                <div key={index} className='swiper-slide p-4 bg-white rounded-lg shadow-md'>
+                                    <p className='text-gray-600 text-sm md:text-base'>
+                                        &quot;{review?.ReviewText}&quot;
+                                    </p>
+                                    <p className='mt-4 text-right text-gray-800 font-semibold'>
+                                        — {review?.ReviewerName}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <a
+                        href={reviewSection?.data[0]?.Button?.ButtonLink || "https://g.page/r/CSsdh2Z8qCl1EBE/review"}
+                        className='mt-6 inline-block px-8 py-3 bg-pink-500 text-white text-lg font-semibold rounded-full shadow-md hover:bg-pink-600 transition duration-300 ease-in-out transform hover:scale-105'
+                    >
+                        {reviewSection?.data[0]?.Button?.ButtonText || "Zanechte recenzi"}
                     </a>
                 </div>
             </section>
 
-            {/* О нас секция */}
-            <section id='about' className='py-6 sm:py-12 bg-gray-100 text-center'>
-                <StudioSection studioInfos={studioInfos} />
-            </section>
-
-            {/* Секция с ценами */}
-            <section id='services' className='py-6 sm:py-12 bg-gray-100'>
-                <PriceList priceList={priceList} />
-            </section>
-
-            {/* Секция с отзывами */}
-            <section id='reviews' className='py-6 sm:py-12 bg-gray-100 text-center'>
-                {/* Здесь будет компонент для отображения отзывов */}
-            </section>
-
             {/* Секция с FAQ */}
             <section id='faq' className='py-8 sm:py-16 bg-white text-center'>
-                {/* Здесь будет компонент для отображения FAQ */}
+                <h2 className='text-5xl font-extrabold text-gray-800 mb-8'>Často kladené otázky</h2>
+                <div className='mt-8 max-w-3xl mx-auto text-left px-4 sm:px-8'>
+                    {faq?.data[0]?.QA?.map((item, index) => (
+                        <details key={index} className='mb-4 border-b border-gray-300 pb-4'>
+                            <summary className='text-lg sm:text-xl sm:text-2xl font-bold text-gray-700 cursor-pointer'>
+                                {item?.Question}
+                            </summary>
+                            <p className='mt-2 text-gray-600'>
+                                {item?.Answer}
+                            </p>
+                        </details>
+                    ))}
+                </div>
             </section>
+
 
             {/* Секция блога */}
             <section id='blog' className='py-8 sm:py-16 bg-gray-100 text-center'>
-                {/* Здесь будет компонент для отображения блогов */}
+                <h2 className='text-5xl font-extrabold text-gray-800 mb-8'>
+                    {blog?.data[0]?.Title || "Blog"}
+                </h2>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto'>
+                    {blog?.data[0]?.Blog?.map((post, index) => (
+                        <div key={index} className='bg-gray-100 p-6 rounded-lg shadow-lg'>
+                            <h3 className='text-lg sm:text-xl sm:text-2xl font-bold text-gray-700'>
+                                {post?.Title}
+                            </h3>
+                            <p className='mt-4 text-gray-600'>
+                                {post?.BlogText}
+                            </p>
+                        </div>
+                    ))}
+                </div>
             </section>
+
 
             {/* Секция контактов */}
             <section id='contacts' className='py-6 sm:py-12 bg-pink-100 text-center'>
-                {/* Здесь будет компонент для отображения контактов */}
+                <h2 className='text-4xl font-extrabold text-gray-800 mb-6 text-center'>
+                    {contact?.data[0]?.ContactTitle || "Kontakty"}
+                </h2>
+
+                <div className='flex justify-center mb-6'>
+                    <div className='w-full max-w-xl'>
+                        {contact?.data[0]?.Contact?.map((contactInfo, index) => (
+                            <div key={index} className='mb-4'>
+                                {contactInfo?.ContactTitle && (
+                                    <h3 className='text-xl font-bold text-gray-800 mb-2'>{contactInfo.ContactTitle}</h3>
+                                )}
+                                {contactInfo?.ContactText?.map((block, blockIndex) => (
+                                    <p key={blockIndex} className='text-lg text-gray-600'>
+                                        {block?.children[0]?.text}
+                                    </p>
+                                ))}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Google Maps iframe */}
+                <div className='mt-6'>
+                    <iframe
+                        src='https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1150.8866804480301!2d14.49033183444746!3d50.10688399427101!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470bed0c618eb39d%3A0x7529a87c66871d2b!2sPopnailscz!5e0!3m2!1scs!2sus!4v1726827052128!5m2!1scs!2sus'
+                        width='100%'
+                        height='500'
+                        loading='lazy'
+                        className='w-full h-96 lg:h-[600px] rounded-lg shadow-lg'
+                    ></iframe>
+                </div>
             </section>
+
+
+            {/* Секция booking */}
+            <section className='flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-pink-100 to-pink-200 text-center py-16'>
+                <h2 className='text-5xl sm:text-6xl font-extrabold text-gray-800 mb-6 drop-shadow-lg'>
+                    {bookingSection?.data[0]?.Title || "Chcete se objednat hned teď?"}
+                </h2>
+                <p className='text-gray-700 text-xl sm:text-2xl mb-8 max-w-2xl mx-auto drop-shadow-md'>
+                    {bookingSection?.data[0]?.Subtitle || "Rezervujte si termín manikúry nebo pedikúry v Popnailscz právě teď!"}
+                </p>
+                {bookingSection?.data[0]?.Button?.map((button, index) => (
+                    <a
+                        key={index}
+                        href={button?.ButtonLink || "https://n995838.alteg.io"}
+                        className='px-12 py-4 sm:px-24 sm:py-6 bg-pink-500 text-white text-lg sm:text-2xl font-semibold rounded-lg shadow-xl hover:bg-pink-700 transition-transform transform hover:scale-105 w-full sm:w-auto max-w-xs sm:max-w-md mx-auto'
+                    >
+                        {button?.ButtonText || "Objednat se online"}
+                    </a>
+                ))}
+            </section>
+
+
+            {/* Footer */}
+            <footer className='py-2 sm:py-4 bg-gray-900 text-white'>
+                <div className='max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center text-center sm:text-left'>
+                    <p className='mb-4 sm:mb-0'>&copy; 2024 Popnailscz. Všechna práva vyhrazena.</p>
+                    <div className='flex justify-center sm:justify-start space-x-6'>
+                        {socials?.data.map((social, index) => (
+                            <a
+                                key={index}
+                                href={social?.Url}
+                                className={`text-white hover:${social?.SocialName === 'WhatsApp' ? 'text-green-500' :
+                                    social?.SocialName === 'Instagram' ? 'text-purple-500' :
+                                        'text-blue-500'
+                                    }`}
+                                target='_blank'
+                                rel='noopener noreferrer'
+                            >
+                                {social?.SocialName === 'WhatsApp' && <FontAwesomeIcon icon={faWhatsapp} className='w-5 h-5' />}
+                                {social?.SocialName === 'Facebook' && <FontAwesomeIcon icon={faFacebookF} className='w-5 h-5' />}
+                                {social?.SocialName === 'Instagram' && <FontAwesomeIcon icon={faInstagram} className='w-5 h-5' />}
+                            </a>
+                        ))}
+                    </div>
+                </div>
+            </footer>
+
         </div>
     );
 }

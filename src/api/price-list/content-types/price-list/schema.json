@@ -10,29 +10,58 @@
   "options": {
     "draftAndPublish": true
   },
-  "pluginOptions": {},
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
   "attributes": {
-    "Gallery": {
-      "displayName": "Gallery",
-      "type": "component",
-      "repeatable": true,
-      "component": "gallery.gallery"
-    },
     "PriceList": {
       "displayName": "PriceList",
       "type": "component",
       "repeatable": true,
-      "component": "price-list.price-list"
+      "component": "price-list.price-list",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "ButtonOnline": {
       "type": "component",
       "repeatable": true,
-      "component": "button.button"
+      "component": "button.button",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "ButtonWhatsAPP": {
       "type": "component",
       "repeatable": true,
-      "component": "button.button"
+      "component": "button.button",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "Gallery": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     }
   }
 }

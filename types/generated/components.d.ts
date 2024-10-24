@@ -39,11 +39,12 @@ export interface PriceListPriceList extends Struct.ComponentSchema {
   collectionName: 'components_price_list_price_lists';
   info: {
     displayName: 'PriceList';
+    description: '';
   };
   attributes: {
     name: Schema.Attribute.String;
     duration: Schema.Attribute.String;
-    price: Schema.Attribute.Decimal;
+    price: Schema.Attribute.String;
   };
 }
 

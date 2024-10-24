@@ -4,18 +4,28 @@
   "info": {
     "singularName": "blog-section",
     "pluralName": "blog-sections",
-    "displayName": "BlogSection"
+    "displayName": "BlogSection",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
-  "pluginOptions": {},
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
   "attributes": {
     "Blog": {
       "displayName": "Blog",
       "type": "component",
       "repeatable": true,
-      "component": "blog.blog"
+      "component": "blog.blog",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     }
   }
 }

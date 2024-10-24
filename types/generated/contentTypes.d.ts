@@ -501,12 +501,23 @@ export interface ApiBlogSectionBlogSection extends Struct.CollectionTypeSchema {
     singularName: 'blog-section';
     pluralName: 'blog-sections';
     displayName: 'BlogSection';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    Blog: Schema.Attribute.Component<'blog.blog', true>;
+    Blog: Schema.Attribute.Component<'blog.blog', true> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -514,12 +525,11 @@ export interface ApiBlogSectionBlogSection extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::blog-section.blog-section'
-    > &
-      Schema.Attribute.Private;
+    >;
   };
 }
 
@@ -530,14 +540,35 @@ export interface ApiBookingSectionBookingSection
     singularName: 'booking-section';
     pluralName: 'booking-sections';
     displayName: 'BookingSection';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    Title: Schema.Attribute.String;
-    Subtitle: Schema.Attribute.Text;
-    Button: Schema.Attribute.Component<'button.button', true>;
+    Title: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Subtitle: Schema.Attribute.Text &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Button: Schema.Attribute.Component<'button.button', true> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -545,12 +576,11 @@ export interface ApiBookingSectionBookingSection
       Schema.Attribute.Private;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::booking-section.booking-section'
-    > &
-      Schema.Attribute.Private;
+    >;
   };
 }
 
@@ -560,12 +590,23 @@ export interface ApiContactContact extends Struct.CollectionTypeSchema {
     singularName: 'contact';
     pluralName: 'contacts';
     displayName: 'Contact';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    Contact: Schema.Attribute.Component<'contact.contact', true>;
+    Contact: Schema.Attribute.Component<'contact.contact', true> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -573,12 +614,11 @@ export interface ApiContactContact extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::contact.contact'
-    > &
-      Schema.Attribute.Private;
+    >;
   };
 }
 
@@ -588,12 +628,23 @@ export interface ApiFaqFaq extends Struct.CollectionTypeSchema {
     singularName: 'faq';
     pluralName: 'faqs';
     displayName: 'FAQ';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    QA: Schema.Attribute.Component<'qa.qa', true>;
+    QA: Schema.Attribute.Component<'qa.qa', true> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -601,9 +652,8 @@ export interface ApiFaqFaq extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::faq.faq'> &
-      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::faq.faq'>;
   };
 }
 
@@ -676,11 +726,39 @@ export interface ApiPriceListPriceList extends Struct.CollectionTypeSchema {
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    Gallery: Schema.Attribute.Component<'gallery.gallery', true>;
-    PriceList: Schema.Attribute.Component<'price-list.price-list', true>;
-    ButtonOnline: Schema.Attribute.Component<'button.button', true>;
-    ButtonWhatsAPP: Schema.Attribute.Component<'button.button', true>;
+    PriceList: Schema.Attribute.Component<'price-list.price-list', true> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    ButtonOnline: Schema.Attribute.Component<'button.button', true> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    ButtonWhatsAPP: Schema.Attribute.Component<'button.button', true> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Gallery: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -688,12 +766,11 @@ export interface ApiPriceListPriceList extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::price-list.price-list'
-    > &
-      Schema.Attribute.Private;
+    >;
   };
 }
 
@@ -704,13 +781,58 @@ export interface ApiReviewSectionReviewSection
     singularName: 'review-section';
     pluralName: 'review-sections';
     displayName: 'ReviewSection';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    Review: Schema.Attribute.Component<'review.review', true> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Button: Schema.Attribute.Component<'button.button', false> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::review-section.review-section'
+    >;
+  };
+}
+
+export interface ApiSocialSocial extends Struct.CollectionTypeSchema {
+  collectionName: 'socials';
+  info: {
+    singularName: 'social';
+    pluralName: 'socials';
+    displayName: 'Social';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    Review: Schema.Attribute.Component<'review.review', true>;
-    Button: Schema.Attribute.Component<'button.button', false>;
+    Url: Schema.Attribute.String;
+    SocialName: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -721,7 +843,7 @@ export interface ApiReviewSectionReviewSection
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::review-section.review-section'
+      'api::social.social'
     > &
       Schema.Attribute.Private;
   };
@@ -733,20 +855,41 @@ export interface ApiStudioInfoStudioInfo extends Struct.CollectionTypeSchema {
     singularName: 'studio-info';
     pluralName: 'studio-infos';
     displayName: 'StudioInfo';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
   attributes: {
-    Title: Schema.Attribute.String;
+    Title: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     Images: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios',
       true
-    >;
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     StudioComponents: Schema.Attribute.Component<
       'studio-components.studio-components',
       true
-    >;
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -754,12 +897,11 @@ export interface ApiStudioInfoStudioInfo extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::studio-info.studio-info'
-    > &
-      Schema.Attribute.Private;
+    >;
   };
 }
 
@@ -1152,6 +1294,7 @@ declare module '@strapi/strapi' {
       'api::hero-section.hero-section': ApiHeroSectionHeroSection;
       'api::price-list.price-list': ApiPriceListPriceList;
       'api::review-section.review-section': ApiReviewSectionReviewSection;
+      'api::social.social': ApiSocialSocial;
       'api::studio-info.studio-info': ApiStudioInfoStudioInfo;
       'admin::permission': AdminPermission;
       'admin::user': AdminUser;

@@ -4,18 +4,28 @@
   "info": {
     "singularName": "contact",
     "pluralName": "contacts",
-    "displayName": "Contact"
+    "displayName": "Contact",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
-  "pluginOptions": {},
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
   "attributes": {
     "Contact": {
       "displayName": "Contact",
       "type": "component",
       "repeatable": true,
-      "component": "contact.contact"
+      "component": "contact.contact",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     }
   }
 }

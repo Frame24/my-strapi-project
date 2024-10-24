@@ -4,18 +4,28 @@
   "info": {
     "singularName": "faq",
     "pluralName": "faqs",
-    "displayName": "FAQ"
+    "displayName": "FAQ",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
-  "pluginOptions": {},
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
   "attributes": {
     "QA": {
       "displayName": "QA",
       "type": "component",
       "repeatable": true,
-      "component": "qa.qa"
+      "component": "qa.qa",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     }
   }
 }

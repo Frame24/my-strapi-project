@@ -4,24 +4,39 @@
   "info": {
     "singularName": "review-section",
     "pluralName": "review-sections",
-    "displayName": "ReviewSection"
+    "displayName": "ReviewSection",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
-  "pluginOptions": {},
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
   "attributes": {
     "Review": {
       "displayName": "Review",
       "type": "component",
       "repeatable": true,
-      "component": "review.review"
+      "component": "review.review",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "Button": {
       "displayName": "Button",
       "type": "component",
       "repeatable": false,
-      "component": "button.button"
+      "component": "button.button",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     }
   }
 }

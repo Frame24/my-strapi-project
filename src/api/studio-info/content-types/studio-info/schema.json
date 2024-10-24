@@ -4,31 +4,52 @@
   "info": {
     "singularName": "studio-info",
     "pluralName": "studio-infos",
-    "displayName": "StudioInfo"
+    "displayName": "StudioInfo",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
-  "pluginOptions": {},
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
   "attributes": {
     "Title": {
-      "type": "string"
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "Images": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
       ],
-      "type": "media",
-      "multiple": true
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "StudioComponents": {
       "displayName": "StudioComponents",
       "type": "component",
       "repeatable": true,
-      "component": "studio-components.studio-components"
+      "component": "studio-components.studio-components",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     }
   }
 }

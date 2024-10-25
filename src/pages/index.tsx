@@ -48,10 +48,54 @@ export default function IndexPage({
     );
 }
 
+async function fetchWithRetry(url: string, options = {}, retries = 5, delay = 2000): Promise<Response> {
+    for (let i = 0; i < retries; i++) {
+        try {
+            const response = await fetch(url, options);
+            if (response.ok) {
+                return response;
+            } else {
+                console.error(`Ошибка запроса, попытка ${i + 1} из ${retries}`, response.status, response.statusText);
+            }
+        } catch (error) {
+            console.error(`Ошибка при выполнении fetch, попытка ${i + 1} из ${retries}`, error);
+        }
+        await new Promise(resolve => setTimeout(resolve, delay));
+    }
+    throw new Error(`Не удалось получить данные с ${url} после ${retries} попыток`);
+}
+
+
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
     // Оригинальные API-запросы для получения текстовой информации
-    const heroRes = await fetch(`http://localhost:1337/api/hero-sections?locale=${locale}&populate[0]=Button`);
-    const heroSection = await heroRes.json();
+    const heroRes = await fetchWithRetry(`http://localhost:1337/api/hero-sections?locale=${locale}&populate[0]=Button`, {}, 20, 3000);
+
+    if (!heroRes.ok) {
+        console.error('Ошибка получения heroSection:', heroRes.status, heroRes.statusText);
+        return {
+            props: {},
+            revalidate: 10,
+        };
+    }
+
+    let heroSection: any;
+
+    try {
+        heroSection = await heroRes.json();
+        if (!heroSection || !heroSection.data) {
+            console.error('Ошибка: данные heroSection отсутствуют или не содержат "data"');
+            return {
+                props: {},
+                revalidate: 10,
+            };
+        }
+    } catch (error) {
+        console.error('Ошибка при парсинге JSON heroSection:', error);
+        return {
+            props: {},
+            revalidate: 10,
+        };
+    }
 
     const studioRes = await fetch(`http://localhost:1337/api/studio-infos?locale=${locale}&populate[0]=StudioComponents&populate[1]=StudioComponents.Icon`);
     const studioInfos = await studioRes.json();

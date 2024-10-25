@@ -13,7 +13,12 @@ export default function IndexPage({
     blog,
     contact,
     bookingSection,
-    socials
+    socials,
+    footer,
+    navbar,
+    heroImage,
+    galleryImages,
+    studioImages,
 }) {
     const seoData = {
         title: 'Popnailscz - Маникюр и Педикюр в Праге',
@@ -33,19 +38,25 @@ export default function IndexPage({
                 contact={contact}
                 bookingSection={bookingSection}
                 socials={socials}
+                footer={footer}
+                navbar={navbar}
+                heroImage={heroImage}
+                galleryImages={galleryImages}
+                studioImages={studioImages}
             />
         </RootLayout>
     );
 }
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-    const heroRes = await fetch(`http://localhost:1337/api/hero-sections?locale=${locale}&populate[0]=background_image&populate[1]=Button`);
+    // Оригинальные API-запросы для получения текстовой информации
+    const heroRes = await fetch(`http://localhost:1337/api/hero-sections?locale=${locale}&populate[0]=Button`);
     const heroSection = await heroRes.json();
 
-    const studioRes = await fetch(`http://localhost:1337/api/studio-infos?locale=${locale}&populate[0]=Images&populate[1]=StudioComponents&populate[2]=StudioComponents.Icon`);
+    const studioRes = await fetch(`http://localhost:1337/api/studio-infos?locale=${locale}&populate[0]=StudioComponents&populate[1]=StudioComponents.Icon`);
     const studioInfos = await studioRes.json();
 
-    const priceRes = await fetch(`http://localhost:1337/api/price-lists?locale=${locale}&populate[0]=PriceList&populate[1]=ButtonOnline&populate[2]=ButtonWhatsAPP&populate[3]=Gallery`);
+    const priceRes = await fetch(`http://localhost:1337/api/price-lists?locale=${locale}&populate[0]=PriceList&populate[1]=ButtonOnline&populate[2]=ButtonWhatsAPP`);
     const priceList = await priceRes.json();
 
     const reviewSectionRes = await fetch(`http://localhost:1337/api/review-sections?locale=${locale}&populate[0]=Review&populate[1]=Button`);
@@ -66,6 +77,22 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     const socialsRes = await fetch(`http://localhost:1337/api/socials?locale=${locale}&populate=*`);
     const socials = await socialsRes.json();
 
+    const footerRes = await fetch(`http://localhost:1337/api/footers?locale=${locale}`);
+    const footer = await footerRes.json();
+
+    const navbarRes = await fetch(`http://localhost:1337/api/navbars?locale=${locale}`);
+    const navbar = await navbarRes.json();
+
+    // Новые API-запросы для получения изображений
+    const heroImageRes = await fetch(`http://localhost:1337/api/first-section-background?locale=${locale}&populate=*`);
+    const heroImage = await heroImageRes.json();
+
+    const galleryRes = await fetch(`http://localhost:1337/api/gallery-of-work?locale=${locale}&populate=*`);
+    const galleryImages = await galleryRes.json();
+
+    const studioImageRes = await fetch(`http://localhost:1337/api/studio?locale=${locale}&populate=*`);
+    const studioImages = await studioImageRes.json();
+
     return {
         props: {
             heroSection,
@@ -77,6 +104,12 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
             contact,
             bookingSection,
             socials,
+            footer,
+            navbar,
+            // Добавляем изображения в props
+            heroImage,
+            galleryImages,
+            studioImages,
         },
     };
 };

@@ -1,0 +1,25 @@
+{
+  "kind": "singleType",
+  "collectionName": "studios",
+  "info": {
+    "singularName": "studio",
+    "pluralName": "studios",
+    "displayName": "Studio"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Images": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": true
+    }
+  }
+}

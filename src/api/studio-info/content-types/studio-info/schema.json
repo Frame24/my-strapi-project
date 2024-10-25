@@ -24,22 +24,6 @@
         }
       }
     },
-    "Images": {
-      "type": "media",
-      "multiple": true,
-      "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ],
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
-    },
     "StudioComponents": {
       "displayName": "StudioComponents",
       "type": "component",

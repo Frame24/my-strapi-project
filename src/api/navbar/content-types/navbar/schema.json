@@ -1,11 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "faqs",
+  "collectionName": "navbars",
   "info": {
-    "singularName": "faq",
-    "pluralName": "faqs",
-    "displayName": "FAQ",
-    "description": ""
+    "singularName": "navbar",
+    "pluralName": "navbars",
+    "displayName": "Navbar"
   },
   "options": {
     "draftAndPublish": true
@@ -16,18 +15,15 @@
     }
   },
   "attributes": {
-    "QA": {
-      "displayName": "QA",
-      "type": "component",
-      "repeatable": true,
-      "component": "qa.qa",
+    "Name": {
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
-      }
+      },
+      "type": "string"
     },
-    "Title": {
+    "Text": {
       "pluginOptions": {
         "i18n": {
           "localized": true

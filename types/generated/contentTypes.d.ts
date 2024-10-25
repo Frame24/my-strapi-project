@@ -518,6 +518,12 @@ export interface ApiBlogSectionBlogSection extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
+    Title: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -607,6 +613,12 @@ export interface ApiContactContact extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
+    Title: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -645,6 +657,12 @@ export interface ApiFaqFaq extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
+    Title: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -654,6 +672,101 @@ export interface ApiFaqFaq extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::faq.faq'>;
+  };
+}
+
+export interface ApiFirstSectionBackgroundFirstSectionBackground
+  extends Struct.SingleTypeSchema {
+  collectionName: 'first_section_backgrounds';
+  info: {
+    singularName: 'first-section-background';
+    pluralName: 'first-section-backgrounds';
+    displayName: 'FirstSectionBackground';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::first-section-background.first-section-background'
+    > &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiFooterFooter extends Struct.CollectionTypeSchema {
+  collectionName: 'footers';
+  info: {
+    singularName: 'footer';
+    pluralName: 'footers';
+    displayName: 'Footer';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    Text: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::footer.footer'>;
+  };
+}
+
+export interface ApiGalleryOfWorkGalleryOfWork extends Struct.SingleTypeSchema {
+  collectionName: 'gallery_of_works';
+  info: {
+    singularName: 'gallery-of-work';
+    pluralName: 'gallery-of-works';
+    displayName: 'Gallery of work';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Images: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::gallery-of-work.gallery-of-work'
+    > &
+      Schema.Attribute.Private;
   };
 }
 
@@ -686,14 +799,6 @@ export interface ApiHeroSectionHeroSection extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
-    background_image: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios'
-    > &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
     Button: Schema.Attribute.Component<'button.button', true> &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -712,6 +817,46 @@ export interface ApiHeroSectionHeroSection extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::hero-section.hero-section'
     >;
+  };
+}
+
+export interface ApiNavbarNavbar extends Struct.CollectionTypeSchema {
+  collectionName: 'navbars';
+  info: {
+    singularName: 'navbar';
+    pluralName: 'navbars';
+    displayName: 'Navbar';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    Name: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    Text: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::navbar.navbar'>;
   };
 }
 
@@ -750,10 +895,31 @@ export interface ApiPriceListPriceList extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
-    Gallery: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios',
-      true
-    > &
+    Title: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    GalleryTitle: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    header1: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    header2: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    header3: Schema.Attribute.String &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -804,6 +970,12 @@ export interface ApiReviewSectionReviewSection
           localized: true;
         };
       }>;
+    Title: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -849,6 +1021,37 @@ export interface ApiSocialSocial extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiStudioStudio extends Struct.SingleTypeSchema {
+  collectionName: 'studios';
+  info: {
+    singularName: 'studio';
+    pluralName: 'studios';
+    displayName: 'Studio';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Images: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::studio.studio'
+    > &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiStudioInfoStudioInfo extends Struct.CollectionTypeSchema {
   collectionName: 'studio_infos';
   info: {
@@ -867,15 +1070,6 @@ export interface ApiStudioInfoStudioInfo extends Struct.CollectionTypeSchema {
   };
   attributes: {
     Title: Schema.Attribute.String &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    Images: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios',
-      true
-    > &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -1291,10 +1485,15 @@ declare module '@strapi/strapi' {
       'api::booking-section.booking-section': ApiBookingSectionBookingSection;
       'api::contact.contact': ApiContactContact;
       'api::faq.faq': ApiFaqFaq;
+      'api::first-section-background.first-section-background': ApiFirstSectionBackgroundFirstSectionBackground;
+      'api::footer.footer': ApiFooterFooter;
+      'api::gallery-of-work.gallery-of-work': ApiGalleryOfWorkGalleryOfWork;
       'api::hero-section.hero-section': ApiHeroSectionHeroSection;
+      'api::navbar.navbar': ApiNavbarNavbar;
       'api::price-list.price-list': ApiPriceListPriceList;
       'api::review-section.review-section': ApiReviewSectionReviewSection;
       'api::social.social': ApiSocialSocial;
+      'api::studio.studio': ApiStudioStudio;
       'api::studio-info.studio-info': ApiStudioInfoStudioInfo;
       'admin::permission': AdminPermission;
       'admin::user': AdminUser;

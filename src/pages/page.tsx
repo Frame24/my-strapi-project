@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-/* eslint-disable @next/next/no-img-element */
 "use client";
 import { useState } from 'react';
 import PriceList from '../components/PriceList';
@@ -32,7 +31,12 @@ export default function Home({
     blog,
     contact,
     bookingSection,
-    socials
+    socials,
+    footer,
+    navbar,
+    heroImage,
+    galleryImages,
+    studioImages,
 }: {
     heroSection: any,
     studioInfos: any,
@@ -42,7 +46,12 @@ export default function Home({
     blog: any,
     contact: any,
     bookingSection: any,
-    socials: any
+    socials: any,
+    footer: any,
+    navbar: any,
+    heroImage: any,
+    galleryImages: any,
+    studioImages: any,
 }) {
     const [isMenuOpen, setMenuOpen] = useState(false);
     const router = useRouter();
@@ -50,6 +59,13 @@ export default function Home({
     const changeLanguage = (locale: string) => {
         router.push(router.pathname, router.asPath, { locale });
     };
+    // Устанавливаем фиксированный порядок элементов навбара
+    const navbarOrder = ["About", "Services", "FAQ", "Blog", "Contacts"];
+
+    // Сортируем элементы навбара в соответствии с заданным порядком
+    const orderedNavbarItems = navbarOrder.map(name =>
+        navbar?.data.find((item: any) => item?.Name === name)
+    ).filter((item: any) => item); // Фильтруем элементы, которые не найдены
 
     return (
         <div>
@@ -75,22 +91,13 @@ export default function Home({
                         className={`${isMenuOpen ? 'block' : 'hidden'} sm:block absolute top-full left-0 w-full bg-white sm:relative sm:w-auto sm:flex sm:items-center sm:space-x-4 p-0 sm:p-0 sm:shadow-none border-t border-gray-200 sm:border-0`}
                     >
                         <ul className='flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-6'>
-                            <li>
-                                <a href='#about' className='text-lg sm:text-base text-gray-700 hover:text-pink-500'>O nás</a>
-                            </li>
-                            <li>
-                                <a href='#services' className='text-lg sm:text-base text-gray-700 hover:text-pink-500'>Služby</a>
-                            </li>
-                            <li>
-                                <a href='#faq' className='text-lg sm:text-base text-gray-700 hover:text-pink-500'>FAQ</a>
-                            </li>
-                            <li>
-                                <a href='#blog' className='text-lg sm:text-base text-gray-700 hover:text-pink-500'>Blog</a>
-                            </li>
-                            <li>
-                                <a href='#contacts' className='text-lg sm:text-base text-gray-700 hover:text-pink-500'>Kontakty</a>
-                            </li>
-
+                            {orderedNavbarItems.map((item, index) => (
+                                <li key={index}>
+                                    <a href={`#${item?.Name.toLowerCase()}`} className='text-lg sm:text-base text-gray-700 hover:text-pink-500'>
+                                        {item?.Text}
+                                    </a>
+                                </li>
+                            ))}
                             {/* Social Media Icons */}
                             <li className='flex space-x-6 mt-4 sm:mt-0'>
                                 {socials?.data.map((social, index) => (
@@ -126,23 +133,22 @@ export default function Home({
             <section
                 className='flex flex-col items-center justify-center min-h-screen bg-cover bg-center relative text-white'
                 style={{
-                    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('http://localhost:1337${heroSection.data[0]?.background_image?.url}')`
-                    ,
+                    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('http://localhost:1337${heroImage.data?.Image?.url}')`,
                     backgroundColor: '#f0f0f0' // Отображается при ошибке загрузки фона
                 }}
             >
                 <div className='relative z-10 text-center px-2 sm:px-4'>
                     <h1 className='text-4xl sm:text-6xl font-bold mb-4 text-shadow'>
-                        {heroSection?.Title || "Popnailscz — Manikúra a Pedikúra v Praze"}
+                        {heroSection?.data[0]?.Title || "Popnailscz — Manikúra a Pedikúra v Praze"}
                     </h1>
                     <p className='mt-4 text-lg sm:text-xl mb-8 text-shadow'>
-                        {heroSection?.Description || "Vaše spokojenost, naše mise"}
+                        {heroSection?.data[0]?.Description || "Vaše spokojenost, naše mise"}
                     </p>
                     <a
-                        href={heroSection?.Button?.ButtonLink || "https://n995838.alteg.io"}
+                        href={heroSection?.data[0]?.Button[0]?.ButtonLink || "https://n995838.alteg.io"}
                         className='mt-8 px-10 py-3 sm:px-20 sm:py-4 bg-pink-500 text-white text-lg sm:text-xl font-semibold rounded-lg shadow-lg hover:bg-pink-700'
                     >
-                        {heroSection?.Button?.ButtonText || "Objednat se online"}
+                        {heroSection?.data[0]?.Button[0]?.ButtonText || "Objednat se online"}
                     </a>
 
                 </div>
@@ -181,7 +187,7 @@ export default function Home({
 
                     {/* Слайдер с изображениями студии */}
                     <div className='w-full lg:w-1/2'>
-                        {studioInfos?.data?.[0]?.Images?.length > 0 ? (
+                        {studioImages?.data?.Images?.length > 0 ? (
                             <div className='relative w-full max-w-lg mx-auto'>
                                 <Swiper
                                     effect='fade'
@@ -190,10 +196,10 @@ export default function Home({
                                     modules={[EffectFade, Navigation, Pagination]}
                                     className='w-full h-[500px] flex items-center justify-center overflow-hidden'
                                 >
-                                    {studioInfos.data[0].Images.map((image, index) => (
+                                    {studioImages.data.Images.map((image, index) => (
                                         <SwiperSlide key={index}>
                                             <img
-                                                src={image.url}
+                                                src={`http://localhost:1337${image?.url}`}
                                                 alt={`Studio ${index}`}
                                                 className='w-full h-full object-cover rounded-lg shadow-xl'
                                                 loading='lazy'
@@ -208,6 +214,7 @@ export default function Home({
                             <p>Nejsou dostupné žádné obrázky studia.</p>
                         )}
                     </div>
+
                 </div>
             </section>
 
@@ -218,16 +225,16 @@ export default function Home({
             {/* Секция с ценами */}
             <section id='services' className='py-12 bg-gradient-to-r from-pink-100 via-pink-200 to-pink-100'>
                 <h2 className='text-5xl font-extrabold text-center text-pink-700 mb-8 font-serif tracking-wide'>
-                    {"Ceník našich služeb"}
+                    {priceList?.data[0]?.Title || "Ceník našich služeb"}
                 </h2>
                 {/* Hlavní kontejner s flex pro zarovnání do řady */}
                 <div className='container mx-auto flex flex-col lg:flex-row justify-between items-center gap-10 lg:gap-24'>
                     {/* Galerie prací */}
                     <div className='w-full lg:w-1/3 flex flex-col items-center'>
                         <h3 className='text-3xl font-bold text-center mb-4 text-pink-800'>
-                            {"Galerie prací"}
+                            {priceList?.data[0]?.GalleryTitle || "Galerie prací"}
                         </h3>
-                        {priceList?.data[0]?.Gallery?.length > 0 ? (
+                        {galleryImages?.data?.Images?.length > 0 ? (
                             <div className='relative w-full max-w-lg'>
                                 <Swiper
                                     effect='fade'
@@ -236,11 +243,11 @@ export default function Home({
                                     modules={[EffectFade, Navigation, Pagination]}
                                     className='w-full h-80 flex items-center justify-center overflow-hidden'
                                 >
-                                    {priceList.data[0].Gallery.map((image, index) => (
+                                    {galleryImages.data.Images.map((image, index) => (
                                         <SwiperSlide key={index}>
                                             <img
-                                                src={image.url}
-                                                alt={image.alternativeText || `Práce ${index}`}
+                                                src={image?.url}
+                                                alt={`Práce ${index}`}
                                                 className='w-full h-80 object-cover rounded-lg shadow-xl'
                                                 loading='lazy'
                                                 style={{ userSelect: 'none' }}
@@ -271,14 +278,15 @@ export default function Home({
                         )}
                     </div>
 
+
                     {/* Таблица услуг и цен */}
                     <div className='w-full lg:w-2/3 bg-white p-10 rounded-xl shadow-xl'>
                         <table className='w-full table-auto font-serif text-lg'>
                             <thead>
                                 <tr>
-                                    <th className='text-left text-pink-700 pb-4'>SLUŽBA</th>
-                                    <th className='text-left text-pink-700 pb-4'>TRVÁNÍ</th>
-                                    <th className='text-left text-pink-700 pb-4'>CENA</th>
+                                    <th className='text-left text-pink-700 pb-4'>{priceList?.data[0]?.header1 || "SLUŽBA"}</th>
+                                    <th className='text-left text-pink-700 pb-4'>{priceList?.data[0]?.header2 || "TRVÁNÍ"}</th>
+                                    <th className='text-left text-pink-700 pb-4'>{priceList?.data[0]?.header3 || "CENA"}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -305,7 +313,7 @@ export default function Home({
             {/* Секция с отзывами */}
             <section id='reviews' className='py-6 sm:py-12 bg-gray-100 text-center'>
                 <h2 className='text-4xl font-extrabold text-gray-800 mb-6'>
-                    {"Recenze"}
+                    {reviewSection?.data[0]?.Title || "Recenze"}
                 </h2>
                 <div className='flex flex-col items-center justify-center'>
                     <div className='swiper-container max-w-lg md:max-w-4xl mx-auto'>
@@ -333,7 +341,7 @@ export default function Home({
 
             {/* Секция с FAQ */}
             <section id='faq' className='py-8 sm:py-16 bg-white text-center'>
-                <h2 className='text-5xl font-extrabold text-gray-800 mb-8'>Často kladené otázky</h2>
+                <h2 className='text-5xl font-extrabold text-gray-800 mb-8'>{faq?.data[0]?.Title || "Často kladené otázky"}</h2>
                 <div className='mt-8 max-w-3xl mx-auto text-left px-4 sm:px-8'>
                     {faq?.data[0]?.QA?.map((item, index) => (
                         <details key={index} className='mb-4 border-b border-gray-300 pb-4'>
@@ -372,7 +380,7 @@ export default function Home({
             {/* Секция контактов */}
             <section id='contacts' className='py-6 sm:py-12 bg-pink-100 text-center'>
                 <h2 className='text-4xl font-extrabold text-gray-800 mb-6 text-center'>
-                    {contact?.data[0]?.ContactTitle || "Kontakty"}
+                    {contact?.data[0]?.Title || "Kontakty"}
                 </h2>
 
                 <div className='flex justify-center mb-6'>
@@ -428,7 +436,10 @@ export default function Home({
             {/* Footer */}
             <footer className='py-2 sm:py-4 bg-gray-900 text-white'>
                 <div className='max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center text-center sm:text-left'>
-                    <p className='mb-4 sm:mb-0'>&copy; 2024 Popnailscz. Všechna práva vyhrazena.</p>
+                    {/* Динамический текст футера */}
+                    <p className='mb-4 sm:mb-0'>{footer?.data[0]?.Text || "© 2024 Popnailscz. Všechna práva vyhrazena."}</p>
+
+                    {/* Иконки социальных сетей */}
                     <div className='flex justify-center sm:justify-start space-x-6'>
                         {socials?.data.map((social, index) => (
                             <a
@@ -449,6 +460,7 @@ export default function Home({
                     </div>
                 </div>
             </footer>
+
 
         </div>
     );

@@ -48,12 +48,12 @@ export default function IndexPage({
     );
 }
 
-async function fetchWithRetry(url: string, options = {}, retries = 5, delay = 2000): Promise<Response> {
+async function fetchWithRetry(url: string, options = {}, retries = 5, delay = 2000): Promise<any> {
     for (let i = 0; i < retries; i++) {
         try {
             const response = await fetch(url, options);
             if (response.ok) {
-                return response;
+                return response.json(); // сразу возвращаем JSON объект
             } else {
                 console.error(`Ошибка запроса, попытка ${i + 1} из ${retries}`, response.status, response.statusText);
             }
@@ -65,77 +65,36 @@ async function fetchWithRetry(url: string, options = {}, retries = 5, delay = 20
     throw new Error(`Не удалось получить данные с ${url} после ${retries} попыток`);
 }
 
-
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-    // Оригинальные API-запросы для получения текстовой информации
-    const heroRes = await fetchWithRetry(`http://localhost:1337/api/hero-sections?locale=${locale}&populate[0]=Button`, {}, 20, 3000);
-
-    if (!heroRes.ok) {
-        console.error('Ошибка получения heroSection:', heroRes.status, heroRes.statusText);
-        return {
-            props: {},
-            revalidate: 10,
-        };
-    }
-
-    let heroSection: any;
-
-    try {
-        heroSection = await heroRes.json();
-        if (!heroSection || !heroSection.data) {
-            console.error('Ошибка: данные heroSection отсутствуют или не содержат "data"');
-            return {
-                props: {},
-                revalidate: 10,
-            };
+    const fetchData = async (url: string) => {
+        try {
+            const data = await fetchWithRetry(url, {}, 5, 2000);
+            if (!data || !data.data) {
+                console.error(`Ошибка: данные от ${url} отсутствуют или не содержат "data"`);
+                return null;
+            }
+            return data;
+        } catch (error) {
+            console.error(`Ошибка получения данных от ${url}:`, error);
+            return null;
         }
-    } catch (error) {
-        console.error('Ошибка при парсинге JSON heroSection:', error);
-        return {
-            props: {},
-            revalidate: 10,
-        };
-    }
+    };
 
-    const studioRes = await fetch(`http://localhost:1337/api/studio-infos?locale=${locale}&populate[0]=StudioComponents&populate[1]=StudioComponents.Icon`);
-    const studioInfos = await studioRes.json();
-
-    const priceRes = await fetch(`http://localhost:1337/api/price-lists?locale=${locale}&populate[0]=PriceList&populate[1]=ButtonOnline&populate[2]=ButtonWhatsAPP`);
-    const priceList = await priceRes.json();
-
-    const reviewSectionRes = await fetch(`http://localhost:1337/api/review-sections?locale=${locale}&populate[0]=Review&populate[1]=Button`);
-    const reviewSection = await reviewSectionRes.json();
-
-    const faqRes = await fetch(`http://localhost:1337/api/faqs?locale=${locale}&populate[0]=QA`);
-    const faq = await faqRes.json();
-
-    const blogRes = await fetch(`http://localhost:1337/api/blog-sections?locale=${locale}&populate[0]=Blog`);
-    const blog = await blogRes.json();
-
-    const contactRes = await fetch(`http://localhost:1337/api/contacts?locale=${locale}&populate[0]=Contact`);
-    const contact = await contactRes.json();
-
-    const bookingRes = await fetch(`http://localhost:1337/api/booking-sections?locale=${locale}&populate[0]=Button`);
-    const bookingSection = await bookingRes.json();
-
-    const socialsRes = await fetch(`http://localhost:1337/api/socials?locale=${locale}&populate=*`);
-    const socials = await socialsRes.json();
-
-    const footerRes = await fetch(`http://localhost:1337/api/footers?locale=${locale}`);
-    const footer = await footerRes.json();
-
-    const navbarRes = await fetch(`http://localhost:1337/api/navbars?locale=${locale}`);
-    const navbar = await navbarRes.json();
-
-    // Новые API-запросы для получения изображений
-    const heroImageRes = await fetch(`http://localhost:1337/api/first-section-background?locale=${locale}&populate=*`);
-    const heroImage = await heroImageRes.json();
-
-    const galleryRes = await fetch(`http://localhost:1337/api/gallery-of-work?locale=${locale}&populate=*`);
-    const galleryImages = await galleryRes.json();
-
-    const studioImageRes = await fetch(`http://localhost:1337/api/studio?locale=${locale}&populate=*`);
-    const studioImages = await studioImageRes.json();
+    // Оригинальные API-запросы для получения текстовой информации
+    const heroSection = await fetchData(`http://localhost:1337/api/hero-sections?locale=${locale}&populate[0]=Button`);
+    const studioInfos = await fetchData(`http://localhost:1337/api/studio-infos?locale=${locale}&populate[0]=StudioComponents&populate[1]=StudioComponents.Icon`);
+    const priceList = await fetchData(`http://localhost:1337/api/price-lists?locale=${locale}&populate[0]=PriceList&populate[1]=ButtonOnline&populate[2]=ButtonWhatsAPP`);
+    const reviewSection = await fetchData(`http://localhost:1337/api/review-sections?locale=${locale}&populate[0]=Review&populate[1]=Button`);
+    const faq = await fetchData(`http://localhost:1337/api/faqs?locale=${locale}&populate[0]=QA`);
+    const blog = await fetchData(`http://localhost:1337/api/blog-sections?locale=${locale}&populate[0]=Blog`);
+    const contact = await fetchData(`http://localhost:1337/api/contacts?locale=${locale}&populate[0]=Contact`);
+    const bookingSection = await fetchData(`http://localhost:1337/api/booking-sections?locale=${locale}&populate[0]=Button`);
+    const socials = await fetchData(`http://localhost:1337/api/socials?locale=${locale}&populate=*`);
+    const footer = await fetchData(`http://localhost:1337/api/footers?locale=${locale}`);
+    const navbar = await fetchData(`http://localhost:1337/api/navbars?locale=${locale}`);
+    const heroImage = await fetchData(`http://localhost:1337/api/first-section-background?locale=${locale}&populate=*`);
+    const galleryImages = await fetchData(`http://localhost:1337/api/gallery-of-work?locale=${locale}&populate=*`);
+    const studioImages = await fetchData(`http://localhost:1337/api/studio?locale=${locale}&populate=*`);
 
     return {
         props: {
@@ -155,5 +114,6 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
             galleryImages,
             studioImages,
         },
+        revalidate: 10,
     };
 };

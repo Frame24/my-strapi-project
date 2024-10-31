@@ -8,7 +8,7 @@
     "strapi:dev": "strapi develop && next dev",
     "build:strapi": "strapi build",
     "build:next": "next build",
-    "build": "concurrently \"strapi develop\" \"wait-on http://localhost:1337 --timeout 120000 && timeout 20 && npm run build:next\"",
+    "build": "strapi build",
     "deploy": "strapi deploy",
     "develop": "concurrently \"strapi develop\" \"npm run next:dev\"",
     "start": "concurrently \"strapi start\" \"next start\"",

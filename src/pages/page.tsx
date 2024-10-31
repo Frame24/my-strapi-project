@@ -75,6 +75,7 @@ export default function Home({
                     <a href='#' className='text-xl sm:text-2xl font-bold text-gray-900'>
                         Popnailscz
                     </a>
+
                     <button
                         className='sm:hidden text-gray-900 focus:outline-none focus:ring-2 focus:ring-pink-500 rounded-md'
                         onClick={() => setMenuOpen(!isMenuOpen)}
@@ -87,26 +88,30 @@ export default function Home({
                             <FontAwesomeIcon icon={faBars} className='w-6 h-6' />
                         )}
                     </button>
+
                     <nav
                         className={`${isMenuOpen ? 'block' : 'hidden'} sm:block absolute top-full left-0 w-full bg-white sm:relative sm:w-auto sm:flex sm:items-center sm:space-x-4 p-0 sm:p-0 sm:shadow-none border-t border-gray-200 sm:border-0`}
                     >
                         <ul className='flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-6'>
                             {orderedNavbarItems.map((item, index) => (
-                                <li key={index}>
+                                <li key={index} className='first:pl-4'>
                                     <a href={`#${item?.Name.toLowerCase()}`} className='text-lg sm:text-base text-gray-700 hover:text-pink-500'>
                                         {item?.Text}
                                     </a>
                                 </li>
                             ))}
+
                             {/* Social Media Icons */}
                             <li className='flex space-x-6 mt-4 sm:mt-0'>
                                 {socials?.data.map((social, index) => (
                                     <a
                                         key={index}
                                         href={social?.Url}
-                                        className={`text-gray-600 hover:${social?.SocialName === 'WhatsApp' ? 'text-green-500' :
-                                            social?.SocialName === 'Instagram' ? 'text-purple-500' :
-                                                'text-blue-500'
+                                        className={`text-gray-600 hover:${social?.SocialName === 'WhatsApp'
+                                                ? 'text-green-500'
+                                                : social?.SocialName === 'Instagram'
+                                                    ? 'text-purple-500'
+                                                    : 'text-blue-500'
                                             }`}
                                         target='_blank'
                                         rel='noopener noreferrer'
@@ -117,6 +122,7 @@ export default function Home({
                                     </a>
                                 ))}
                             </li>
+
                             {/* Language Switch Buttons */}
                             <li className='flex space-x-4 mt-4 sm:mt-0'>
                                 <button onClick={() => changeLanguage('cs-CZ')} className={`text-gray-700 ${router.locale === 'cs-CZ' ? 'font-bold' : ''} hover:text-pink-500`}>CZ</button>
@@ -129,30 +135,39 @@ export default function Home({
             </header>
 
 
+
             {/* Hero секция */}
+
             <section
-                className='flex flex-col items-center justify-center min-h-screen bg-cover bg-center relative text-white'
+                className='flex flex-col items-center justify-between min-h-screen bg-cover bg-center relative text-white'
                 style={{
                     backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('http://localhost:1337${heroImage.data?.Image?.url}')`,
                     backgroundColor: '#f0f0f0' // Отображается при ошибке загрузки фона
                 }}
             >
-                <div className='relative z-10 text-center px-2 sm:px-4'>
-                    <h1 className='text-4xl sm:text-6xl font-bold mb-4 text-shadow'>
+                <div className='flex flex-col items-center justify-center flex-grow text-center px-4 sm:px-8 pt-24'>
+                    <h1 className='text-5xl sm:text-7xl font-bold mb-4 text-shadow'>
                         {heroSection?.data[0]?.Title || "Popnailscz — Manikúra a Pedikúra v Praze"}
                     </h1>
-                    <p className='mt-4 text-lg sm:text-xl mb-8 text-shadow'>
+
+                    <p className='mt-8 text-xl sm:text-5xl mb-10 text-shadow'>
                         {heroSection?.data[0]?.Description || "Vaše spokojenost, naše mise"}
                     </p>
+                </div>
+
+                <div className='flex justify-center w-full pb-28'>
                     <a
                         href={heroSection?.data[0]?.Button[0]?.ButtonLink || "https://n995838.alteg.io"}
-                        className='mt-8 px-10 py-3 sm:px-20 sm:py-4 bg-pink-500 text-white text-lg sm:text-xl font-semibold rounded-lg shadow-lg hover:bg-pink-700'
+                        className='px-28 py-8 sm:px-32 sm:py-10 bg-pink-500 text-white text-2xl sm:text-3xl font-semibold rounded-full shadow-lg hover:bg-pink-700'
                     >
                         {heroSection?.data[0]?.Button[0]?.ButtonText || "Objednat se online"}
                     </a>
-
                 </div>
             </section>
+
+
+
+
 
 
 
@@ -425,7 +440,7 @@ export default function Home({
                     <a
                         key={index}
                         href={button?.ButtonLink || "https://n995838.alteg.io"}
-                        className='px-12 py-4 sm:px-24 sm:py-6 bg-pink-500 text-white text-lg sm:text-2xl font-semibold rounded-lg shadow-xl hover:bg-pink-700 transition-transform transform hover:scale-105 w-full sm:w-auto max-w-xs sm:max-w-md mx-auto'
+                        className='px-12 py-4 sm:px-24 sm:py-6 bg-pink-500 text-white text-lg sm:text-2xl font-semibold rounded-full shadow-xl hover:bg-pink-700 transition-transform transform hover:scale-105 w-full sm:w-auto max-w-xs sm:max-w-md mx-auto'
                     >
                         {button?.ButtonText || "Objednat se online"}
                     </a>

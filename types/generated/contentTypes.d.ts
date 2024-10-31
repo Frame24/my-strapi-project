@@ -500,7 +500,7 @@ export interface ApiBlogSectionBlogSection extends Struct.CollectionTypeSchema {
   info: {
     singularName: 'blog-section';
     pluralName: 'blog-sections';
-    displayName: 'BlogSection';
+    displayName: '\u0421\u0435\u043A\u0446\u0438\u044F \u0411\u043B\u043E\u0433';
     description: '';
   };
   options: {
@@ -545,7 +545,7 @@ export interface ApiBookingSectionBookingSection
   info: {
     singularName: 'booking-section';
     pluralName: 'booking-sections';
-    displayName: 'BookingSection';
+    displayName: '\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u0441\u0435\u043A\u0446\u0438\u044F';
     description: '';
   };
   options: {
@@ -595,7 +595,7 @@ export interface ApiContactContact extends Struct.CollectionTypeSchema {
   info: {
     singularName: 'contact';
     pluralName: 'contacts';
-    displayName: 'Contact';
+    displayName: '\u041A\u043E\u043D\u0442\u0430\u043A\u0442\u044B';
     description: '';
   };
   options: {

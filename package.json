@@ -6,10 +6,12 @@
   "scripts": {
     "next:dev": "next dev",
     "strapi:dev": "strapi develop && next dev",
-    "build": "strapi build && next build",
+    "build:strapi": "strapi build",
+    "build:next": "next build",
+    "build": "concurrently \"strapi develop\" \"wait-on http://localhost:1337 --timeout 120000 && timeout 20 && npm run build:next\"",
     "deploy": "strapi deploy",
     "develop": "concurrently \"strapi develop\" \"npm run next:dev\"",
-    "start": "strapi start && next start",
+    "start": "concurrently \"strapi start\" \"next start\"",
     "strapi": "strapi",
     "lint": "next lint"
   },
@@ -44,7 +46,8 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.12",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wait-on": "^8.0.1"
   },
   "engines": {
     "node": ">=18.0.0 <=22.x.x",

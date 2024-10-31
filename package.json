@@ -11,7 +11,7 @@
     "build": "strapi build",
     "deploy": "strapi deploy",
     "develop": "concurrently \"strapi develop\" \"npm run next:dev\"",
-    "start": "concurrently \"strapi start\" \"next start\"",
+    "start": "concurrently \"strapi start\" \"next build && next start\"",
     "strapi": "strapi",
     "lint": "next lint"
   },
